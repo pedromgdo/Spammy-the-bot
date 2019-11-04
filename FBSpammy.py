@@ -1,27 +1,42 @@
 
 from fbchat import Client
 from fbchat.models import *
+from getpass import getpass
 import time
+import os
+
+#clear the screen
+def clearScreen():
+    os.system('cls' if os.name=='nt' else 'clear')
+
 
 email = input("Email: ")
-password = input('Password: ')
+password = getpass()
+#password = input('Password: ')
+clearScreen()
 user = Client(email,password)
+
+
 
 def spammyGUI():
     msg = input("Message to spam: ")
     delay = int(input("Time between messages (seconds): "))
+    choice = 'NULL'
+    choice2 = 'NULL'
 
     choice = input("Do you have the destination user id? [Y/N]")
-    if choice == 'Y':
+
+    if choice.lower() == 'y':
         cdest = input("Input destination id: ")
         dest = user.fetchThreadInfo(cdest)[cdest]
 
-    elif choice == 'N':
-        choice = input("[0] Check all users you've recently talked | [1] Search for name")
-        if(choice == '0'):
+    elif choice.lower() == 'n':
+        choice2 = input("[0] Check all users you've recently talked | [1] Search for name")
+        if(choice2 == '0'):
             dest = printUserList(user.fetchThreadList())
-        elif(choice == '1'):
+        elif(choice2 == '1'):
             dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
+
 
     counter = 0
     while True:
