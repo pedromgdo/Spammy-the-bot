@@ -54,19 +54,19 @@ def spammyGUI(user):
     msg = input("Message to spam: ")
     delay = int(input("Time between messages (seconds): "))
     choice2 = 'NULL'
+    dest = None
 
     choice = menuScreen(["I have the destination user ID", "I don't have the destination user ID"])
-    choice = input("Do you have the destination user id? [Y/N]")
 
-    if choice == 0:
+    if choice == 1:
         cdest = input("Input destination id: ")
         dest = user.fetchThreadInfo(cdest)[cdest]
 
-    elif choice == 1:
+    elif choice == 2:
         choice2 = menuScreen(["Check all the Users you talked with recently", "Search for a User's name"])
-        if choice2 == 0:
+        if choice2 == 1:
             dest = printUserList(user.fetchThreadList())
-        elif choice2 == 1:
+        elif choice2 == 2:
             dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
 
     counter = 0
