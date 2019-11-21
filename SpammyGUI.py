@@ -2,41 +2,36 @@ from AuxiliarFuncs import *
 from getpass import getpass
 import time
 
-# Creates a Menu that returns the chosen option
-def menuScreen(options):
-    print("Select an Option")
-    i = 0
-    for var in options:
-        i = i + 1
-        print("[{0}] - {1}".format(str(i), var))
-    choice = int(input())
-    while choice < 0 or choice > len(options):
-        print("Select a valid Option")
-        i = 0
-        for var in options:
-            i = i+1
-            print("[{0}] - {1}".format(str(i), var))
-        choice = int(input())
-    return choice
-
-
+# Start screen for Spammy the bot!
 def startScreen():
     print("Welcome to Spammy the bot!")
-    print("Please select an option to continue:")
-    choice = menuScreen(["Login With saved Account", "Login", "Quit"])
-    if choice == 1:
-        print("Work in Progress")
-    elif choice == 2:
-        return
-    elif choice == 3:
-        quit()
+    success = False
+    while not success:
+        choice = menuScreen(["Login With saved Account", "Login", "Quit"])
+        if choice == 1:
+            if not hasAccountsSaved():
+                print("Error: No accounts Saved")
+            else:
+                success = True
+                print("Select an account:")
+                nr = showSavedAccounts()
+                choice2 = 0
+                while choice2 <= 0 or choice2 > nr:  # Works since nr is always bigger than one
+                    choice2 = int(input())
+                    if choice2 <= 0 or choice2 > nr:
+                        print("Please select a valid account")
+                return choice2
+        elif choice == 2:
+            return 0
+        elif choice == 3:
+            quit()
 
 
+# Lets you enter the information to try to Login without saved information
 def loginScreen():
-    fail = True
-    user = None
+    fail, user, email, password = True, None, None, None
     while fail:
-        email = input("Enter your Email:\n")
+        email = input("Enter your Email ou phone number:\n")
         password = getpass("Enter your Password:\n")
         clearScreen()
         try:
@@ -44,16 +39,29 @@ def loginScreen():
             fail = False
         except:
             fail = True
-            print("Error: Could not login - Username or Password incorrect.")
+            print("Error: Could not login, Email/phone number or Password incorrect.")
+    if not accountSaved(email):
+        print("Would you like to save the login information?")
+        choice = menuScreen(["Save Login Information", "Don't save Login Information"])
+        if choice == 1:
+            saveAccount(email, password)
     return user
 
+# Attempts to login with saved information
+def Login(savedUser):
+    email = getUsername(savedUser)
+    password = getPassword(savedUser)
+    try:
+        user = Client(email, password)
+        return user
+    except:
+        print("Error: Could not login, Email/phone number or Password incorrect.")
+        return None
 
-
-
+# Retrieves the information to start spamming users
 def spammyGUI(user):
     msg = input("Message to spam: ")
     delay = int(input("Time between messages (seconds): "))
-    choice2 = 'NULL'
     dest = None
 
     choice = menuScreen(["I have the destination user ID", "I don't have the destination user ID"])
@@ -71,7 +79,7 @@ def spammyGUI(user):
 
     counter = 0
     while True:
-        user.send(Message(text=msg),thread_id=dest.uid,thread_type=dest.type)
+        user.send(Message(text=msg), thread_id=dest.uid, thread_type=dest.type)
         counter += 1
         print("Sent message {0} times".format(counter))
         time.sleep(delay)

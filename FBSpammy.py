@@ -1,8 +1,13 @@
 from SpammyGUI import *
 
+user = None
 
-startScreen()
-user = loginScreen()
+while user is None:
+    loginOption = startScreen()
+    if loginOption == 0:
+        user = loginScreen()
+    else:
+        user = Login(loginOption)
 
 spammyGUI(user)
 
