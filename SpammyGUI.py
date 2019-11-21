@@ -64,8 +64,13 @@ def Login(savedUser):
 # Retrieves the information to start spamming users
 def spammyGUI(user):
     msg = input("Message to spam: ")
-    clearScreen()
-    delay = int(input("Time between messages (seconds): "))
+    success = False
+    while not success:
+        try:
+            delay = int(input("Time between messages (seconds): "))
+            success = True
+        except:
+            print("Error: Input is not a number")
     dest = None
 
     clearScreen()
@@ -91,4 +96,7 @@ def spammyGUI(user):
         user.send(Message(text=msg), thread_id=dest.uid, thread_type=dest.type)
         counter += 1
         print("Sent message {0} times".format(counter))
-        time.sleep(delay)
+        try:
+            time.sleep(delay)
+        except:
+            return
