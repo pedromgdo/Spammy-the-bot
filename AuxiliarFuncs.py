@@ -1,6 +1,7 @@
 import os
-from fbchat import Client
 from fbchat.models import *
+from fbchat import Client
+import base64
 
 path = "LoginInformation.txt"
 
@@ -42,7 +43,7 @@ def accountSaved(username):
 # Saves an account
 def saveAccount(username, password):
     file = open(path, "a+")
-    file.write(username + ' ' + password + '\n')
+    file.write(username + ' ' + b64encode(password) + '\n')
     file.close()
     return
 
@@ -69,7 +70,7 @@ def showSavedAccounts():
 
 # Returns the [number] username
 def getUsername(number):
-    file = open(path, "r+")
+    file = open(path, "r")
     accounts = file.readlines()
     file.close()
     for s1 in accounts:
@@ -80,22 +81,31 @@ def getUsername(number):
 
 # returns the [number] password
 def getPassword(number):
-    file = open(path, "r+")
+    file = open(path, "r")
     accounts = file.readlines()
     file.close()
     for s1 in accounts:
         if number == 1:
-            return s1.split(" ")[1]
+            return b64decode(s1.split(" ")[1])
         number -= 1
     return
+
+# Encode a string (password)
+def b64encode(string):
+  encodedBytes = base64.b64encode(string.encode("utf-8"))
+  return str(encodedBytes, "utf-8")
+
+# Decode a string (password)
+def b64decode(encoded):
+  return str(base64.b64decode(encoded))[2:-1]
 
 # Prints and returns the list of users
 def printUserList(users):
     for index in range(len(users)):
         puser = users[index]
         if type(puser) is User:
-            print("[{0}] User's name: {1}\n{friend}\n\n".format(index, puser.name, friend="This user is your friend" if puser.is_friend == True else "This user is not your friend"))
+            print("[{0}] User's name: {1}, {friend}\n".format(index, puser.name, friend="This user is your friend" if puser.is_friend == True else "This user is not your friend"))
         else:
-            print("[{0}] Group name: {1}\n\n".format(index, puser.name))
+            print("[{0}] Group name: {1}\n".format(index, puser.name))
     choice = int(input("Choose user index:\n"))
     return users[choice]

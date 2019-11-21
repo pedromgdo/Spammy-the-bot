@@ -13,6 +13,7 @@ def startScreen():
                 print("Error: No accounts Saved")
             else:
                 success = True
+                clearScreen()
                 print("Select an account:")
                 nr = showSavedAccounts()
                 choice2 = 0
@@ -20,8 +21,10 @@ def startScreen():
                     choice2 = int(input())
                     if choice2 <= 0 or choice2 > nr:
                         print("Please select a valid account")
+                clearScreen()
                 return choice2
         elif choice == 2:
+            clearScreen()
             return 0
         elif choice == 3:
             quit()
@@ -61,22 +64,28 @@ def Login(savedUser):
 # Retrieves the information to start spamming users
 def spammyGUI(user):
     msg = input("Message to spam: ")
+    clearScreen()
     delay = int(input("Time between messages (seconds): "))
     dest = None
 
+    clearScreen()
     choice = menuScreen(["I have the destination user ID", "I don't have the destination user ID"])
 
     if choice == 1:
+        clearScreen()
         cdest = input("Input destination id: ")
         dest = user.fetchThreadInfo(cdest)[cdest]
 
     elif choice == 2:
+        clearScreen()
         choice2 = menuScreen(["Check all the Users you talked with recently", "Search for a User's name"])
         if choice2 == 1:
+            clearScreen()
             dest = printUserList(user.fetchThreadList())
         elif choice2 == 2:
+            clearScreen()
             dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
-
+    clearScreen()
     counter = 0
     while True:
         user.send(Message(text=msg), thread_id=dest.uid, thread_type=dest.type)
