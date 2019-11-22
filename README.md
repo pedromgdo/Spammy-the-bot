@@ -1,7 +1,7 @@
 # Spammy the bot
 
 ## Introduction
-Hello there, this is a project we made in our free time for fun. While using our bot we don't recommend using Spammy with spam times lower than 30 seconds. The first time using it facebook might have you change your password because of suspicious activity, it might happen more than once and while we never had it happen, you might get banned so be warned.
+Hello there, this is a project we made in our free time for fun. While using Spammy we don't recommend using spam times lower than 30 seconds. The first time using it facebook might have you change your password because of suspicious activity, it might happen more than once and while we never had it happen, you might get banned so be warned.
 Other than that have fun!
 
 ## How to Install
