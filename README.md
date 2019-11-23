@@ -7,8 +7,7 @@ Other than that have fun!
 ## How to Install
 
 - Download Python at least version 3.0
-- Get fbchat using: ```$ pip install fbchat ```
-- Start the bot using: ```$ python .\FBSpammy.py```
+- Start the bot using: ```$ python .\Spammy.py```
 - Follow instructions on screen to start spamming
 
 ## Credits
