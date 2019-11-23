@@ -81,8 +81,10 @@ def spammyGUI(user):
 
         if choice == 1:
             clearScreen()
-            cdest = input("Input destination id: ")
-            dest = user.fetchThreadInfo(cdest)[cdest]
+            
+            cdest = input("Input destination id: (-1 to cancel)")
+            if cdest != '-1':
+                dest = user.fetchThreadInfo(cdest)[cdest]
 
         elif choice == 2:
             clearScreen()
@@ -94,11 +96,10 @@ def spammyGUI(user):
                 clearScreen()
                 dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
         clearScreen()
-        
-        
-        userL.append(dest)
-        print(printDest(userL))
-        choiceF = menuScreen(["Add more friends!", "Start Spamming!"])
+        if cdest != '-1':
+            userL.append(dest)
+            print(printDest(userL))
+            choiceF = menuScreen(["Add more friends!", "Start Spamming!"])
     counter = 0
     while True:
         for dests in userL:
