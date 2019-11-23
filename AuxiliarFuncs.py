@@ -109,3 +109,9 @@ def printUserList(users):
             print("[{0}] Group name: {1}\n".format(index, puser.name))
     choice = int(input("Choose user index:\n"))
     return users[choice]
+
+def printDest(users):
+    string = ''
+    for user in users:
+        string += " {0} |".format(user.name)
+    return "Currently sending to: {0}".format(string)

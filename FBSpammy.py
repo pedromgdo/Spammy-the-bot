@@ -1,4 +1,13 @@
-from SpammyGUI import *
+import os
+
+try:
+    from SpammyGUI import *
+except:
+    print('It seems you dont have fbchat installed, lets fix that!')
+    os.system("pip install fbchat")
+    from SpammyGUI import *
+    clearScreen()
+
 
 user = None
 

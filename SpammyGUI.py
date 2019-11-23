@@ -65,6 +65,9 @@ def Login(savedUser):
 def spammyGUI(user):
     msg = input("Message to spam: ")
     success = False
+    userL = []
+    choiceF = 69
+
     while not success:
         try:
             delay = int(input("Time between messages (seconds): "))
@@ -72,30 +75,38 @@ def spammyGUI(user):
         except:
             print("Error: Input is not a number")
     dest = None
-
-    clearScreen()
-    choice = menuScreen(["I have the destination user ID", "I don't have the destination user ID"])
-
-    if choice == 1:
+    while choiceF != 2:
         clearScreen()
-        cdest = input("Input destination id: ")
-        dest = user.fetchThreadInfo(cdest)[cdest]
+        choice = menuScreen(["I have the destination user ID", "I don't have the destination user ID"])
 
-    elif choice == 2:
+        if choice == 1:
+            clearScreen()
+            cdest = input("Input destination id: ")
+            dest = user.fetchThreadInfo(cdest)[cdest]
+
+        elif choice == 2:
+            clearScreen()
+            choice2 = menuScreen(["Check all the Users you talked with recently", "Search for a User's name"])
+            if choice2 == 1:
+                clearScreen()
+                dest = printUserList(user.fetchThreadList())
+            elif choice2 == 2:
+                clearScreen()
+                dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
         clearScreen()
-        choice2 = menuScreen(["Check all the Users you talked with recently", "Search for a User's name"])
-        if choice2 == 1:
-            clearScreen()
-            dest = printUserList(user.fetchThreadList())
-        elif choice2 == 2:
-            clearScreen()
-            dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
-    clearScreen()
+        
+        
+        userL.append(dest)
+        print(printDest(userL))
+        choiceF = menuScreen(["Add more friends!", "Start Spamming!"])
     counter = 0
     while True:
-        user.send(Message(text=msg), thread_id=dest.uid, thread_type=dest.type)
+        for dests in userL:
+            user.send(Message(text=msg), thread_id=dests.uid, thread_type=dests.type)
+        
         counter += 1
         print("Sent message {0} times".format(counter))
+        
         try:
             time.sleep(delay)
         except:
