@@ -3,7 +3,7 @@ import os
 try:
     from SpammyGUI import *
 except:
-    print('Installing dependencies...')
+    print('Installing dependencies')
     os.system("pip install fbchat")
     from SpammyGUI import *
     clearScreen()
