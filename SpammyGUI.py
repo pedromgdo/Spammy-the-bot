@@ -96,6 +96,7 @@ def spammyGUI(user):
             elif choice2 == 2:
                 clearScreen()
                 dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
+        
         elif choice == 3:
             if not hasIDsaved():
                 print("Error: No IDs Saved.")

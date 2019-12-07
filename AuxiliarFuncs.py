@@ -2,6 +2,7 @@ import os
 from fbchat.models import *
 from fbchat import Client
 import base64
+import json
 
 path = "LoginInformation.txt"
 
@@ -117,9 +118,29 @@ def showIDLists():
     return
 def getIDList(id):
     return
+
 def hasIDListName(listName):
-    return
+    IDLists = json.loads(open('savedIDs.json').read())
+    try:
+        a = IDLists[listName]
+    except:
+        return False
+    return True
+
 def saveIDList(listName,userList):
+    try:
+        IDLists = json.loads(open('savedIDs.json').read())
+    except:
+        IDLists = {}
+        file = open("tests.json","x")
+        file.close()
+
+    IDLists[listName] = userList
+
+    with open("savedIDs.json", "w") as write_file:
+        json.dump(IDLists, write_file)
+
+
     return
 
 
