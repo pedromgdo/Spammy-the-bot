@@ -75,14 +75,17 @@ def spammyGUI(user):
             print("Error: Input is not a number")
     dest = None
     destList = None
+    cdest = ""
     while choiceF != 3:
         clearScreen()
         choice = menuScreen(["I have the destination user ID", "I don't have the destination user ID", "Append Saved ID list", "Use Saved ID list"])
 
         if choice == 1:
             clearScreen()
-            cdest = input("Input destination id: ")
-            dest = user.fetchThreadInfo(cdest)[cdest]
+            
+            cdest = input("Input destination id: (-1 to cancel)")
+            if cdest != '-1':
+                dest = user.fetchThreadInfo(cdest)[cdest]
 
         elif choice == 2:
             clearScreen()
@@ -124,7 +127,7 @@ def spammyGUI(user):
                 userL = getIDList(choice2)
 
         clearScreen()
-        
+        if cdest == '-1': continue
         if destList is not None: userL.append(destList)
         if dest is not None: userL.append(dest)
         print(printDest(userL))
@@ -136,7 +139,6 @@ def spammyGUI(user):
                 print("Error: Name not unique.")
                 listName = input("Input a name for the ID List: (Must be unique)")
             saveIDList(listName,userL)
-
     counter = 0
     while True:
         for dests in userL:

@@ -147,4 +147,5 @@ def printDest(users):
     string = ''
     for user in users:
         string += " {0} |".format(user.name)
-    return "Currently sending to: {0}".format(string)
+
+    return "Currently sending to: {0}".format(string[:-1])
