@@ -109,7 +109,7 @@ def spammyGUI(user):
                     choice2 = int(input())
                     if choice2 <= 0 or choice2 > nr:
                         print("Please select a valid ID List")
-                destList = getIDList(choice2)
+                destList = getIDList(user,choice2)
                 clearScreen()
         elif choice == 4:
             clearScreen()
@@ -126,12 +126,12 @@ def spammyGUI(user):
                     choice2 = int(input())
                     if choice2 <= 0 or choice2 > nr:
                         print("Please select a valid ID List")
-                userL = getIDList(choice2)
+                userL = getIDList(user,choice2)
                 clearScreen()
 
         if cdest == '-1': continue
-        if destList is not None: userL.append(destList)
-        if dest is not None: userL.append(dest)
+        if destList is not None: userL += destList
+        if dest is not None: userL += dest
         print(printDest(userL))
         choiceF = menuScreen(["Add more friends!", "Save ID List", "Start Spamming!"])
         clearScreen()
@@ -151,8 +151,7 @@ def spammyGUI(user):
         print("Warning: No users selected.")
     while True:
         for dests in userL:
-            user.send(Message(text=msg), thread_id=dests.uid, thread_type=dests.type)
-        
+                user.send(Message(text=msg), thread_id=dests.uid, thread_type=dests.type)
         counter += 1
         print("Sent message {0} times".format(counter))
         

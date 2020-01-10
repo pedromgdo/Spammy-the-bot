@@ -114,15 +114,21 @@ def getPassword(number):
 #TODO
 def hasIDsaved():
     try:
-        if json.loads(open('savedIDs.json')) is None:
-            return False
-        return True
+        a = json.loads(open('savedIDs.json','r').read())
+        return(len(a) != 0)
     except:
         return False
+
 def showIDLists():
-    return
-def getIDList(id):
-    return
+    i = 1
+    for key in json.loads(open('savedIDs.json','r').read()):
+        print("[{0}] - {1}".format(i,key))
+        i+=1
+    return i
+
+def getIDList(user,id):
+    jason = json.loads(open('savedIDs.json','r').read())
+    return idsToUsers(user,jason[list(jason.keys())[id-1]])
 
 def hasIDListName(listName):
     try:
@@ -141,8 +147,10 @@ def saveIDList(listName,userList):
         file = open("savedIDs.json","w+")
         file.close()
 
+    teste = []
     for user in userList:
-        IDLists[listName].append(user.uid)
+        teste.append(user.uid)
+    IDLists[listName] = teste
 
     with open("savedIDs.json", "w") as write_file:
         json.dump(IDLists, write_file)
@@ -176,4 +184,13 @@ def printDest(users):
     for user in users:
         string += " {0} |".format(user.name)
 
+
+
     return "Currently sending to: {0}".format(string[:-1])
+
+def idsToUsers(user,list):
+    out = []
+    for id in list:
+        dest = user.fetchThreadInfo(id)[id]
+        out.append(dest)
+    return out
