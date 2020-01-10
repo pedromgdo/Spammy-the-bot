@@ -131,7 +131,7 @@ def spammyGUI(user):
 
         if cdest == '-1': continue
         if destList is not None: userL += destList
-        if dest is not None: userL += dest
+        if dest is not None: userL.append(dest)
         print(printDest(userL))
         choiceF = menuScreen(["Add more friends!", "Save ID List", "Start Spamming!"])
         clearScreen()
