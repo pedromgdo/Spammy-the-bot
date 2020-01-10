@@ -113,7 +113,12 @@ def getPassword(number):
 
 #TODO
 def hasIDsaved():
-    return
+    try:
+        if json.loads(open('savedIDs.json')) is None:
+            return False
+        return True
+    except:
+        return False
 def showIDLists():
     return
 def getIDList(id):
@@ -126,14 +131,14 @@ def hasIDListName(listName):
     except:
         return False
 
-
+#TODO make work
 def saveIDList(listName,userList):
 
     try:
         IDLists = json.loads(open('savedIDs.json').read())
     except:
         IDLists = {}
-        file = open("savedIDs.json","x")
+        file = open("savedIDs.json","w+")
         file.close()
 
     for user in userList:

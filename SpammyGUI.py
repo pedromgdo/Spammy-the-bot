@@ -77,7 +77,6 @@ def spammyGUI(user):
     destList = None
     cdest = ""
     while choiceF != 3:
-        clearScreen()
         choice = menuScreen(["I have the destination user ID", "I don't have the destination user ID", "Append Saved ID list", "Use Saved ID list"])
 
         if choice == 1:
@@ -98,6 +97,7 @@ def spammyGUI(user):
                 dest = printUserList(user.searchForUsers(input("What's the friend's name?")))
         
         elif choice == 3:
+            clearScreen()
             if not hasIDsaved():
                 print("Error: No IDs Saved.")
             else:
@@ -112,6 +112,7 @@ def spammyGUI(user):
                 destList = getIDList(choice2)
                 clearScreen()
         elif choice == 4:
+            clearScreen()
             if not hasIDsaved():
                 print("Error: No IDs Saved.")
             else:
@@ -126,21 +127,28 @@ def spammyGUI(user):
                     if choice2 <= 0 or choice2 > nr:
                         print("Please select a valid ID List")
                 userL = getIDList(choice2)
+                clearScreen()
 
-        clearScreen()
         if cdest == '-1': continue
         if destList is not None: userL.append(destList)
         if dest is not None: userL.append(dest)
         print(printDest(userL))
         choiceF = menuScreen(["Add more friends!", "Save ID List", "Start Spamming!"])
+        clearScreen()
         if choiceF == 2:
-            listName = input("Input a name for the ID List: (Must be unique)")
+            listName = input("Input a name for the ID List: (Must be unique)\n")
             while hasIDListName(listName):
                 clearScreen()
                 print("Error: Name not unique.")
-                listName = input("Input a name for the ID List: (Must be unique)")
-            saveIDList(listName,userL)
+                listName = input("Input a name for the ID List: (Must be unique)\n")
+            if len(userL) != 0:
+                saveIDList(listName,userL)
+            else :
+                clearScreen()
+                print("Error: No users selected.")
     counter = 0
+    if len(userL) == 0:
+        print("Warning: No users selected.")
     while True:
         for dests in userL:
             user.send(Message(text=msg), thread_id=dests.uid, thread_type=dests.type)
