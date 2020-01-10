@@ -120,22 +120,24 @@ def getIDList(id):
     return
 
 def hasIDListName(listName):
-    IDLists = json.loads(open('savedIDs.json').read())
     try:
-        a = IDLists[listName]
+        IDLists = json.loads(open('savedIDs.json').read())
+        return listName in IDLists
     except:
         return False
-    return True
+
 
 def saveIDList(listName,userList):
+
     try:
         IDLists = json.loads(open('savedIDs.json').read())
     except:
         IDLists = {}
-        file = open("tests.json","x")
+        file = open("savedIDs.json","x")
         file.close()
 
-    IDLists[listName] = userList
+    for user in userList:
+        IDLists[listName].append(user.uid)
 
     with open("savedIDs.json", "w") as write_file:
         json.dump(IDLists, write_file)

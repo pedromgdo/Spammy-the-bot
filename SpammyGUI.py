@@ -135,7 +135,7 @@ def spammyGUI(user):
         choiceF = menuScreen(["Add more friends!", "Save ID List", "Start Spamming!"])
         if choiceF == 2:
             listName = input("Input a name for the ID List: (Must be unique)")
-            while not hasIDListName(listName):
+            while hasIDListName(listName):
                 clearScreen()
                 print("Error: Name not unique.")
                 listName = input("Input a name for the ID List: (Must be unique)")
