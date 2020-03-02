@@ -2,6 +2,7 @@ import os
 from fbchat.models import *
 from fbchat import Client
 import base64
+import json
 
 path = "LoginInformation.txt"
 
@@ -90,6 +91,54 @@ def getPassword(number):
         number -= 1
     return
 
+#TODO
+def hasIDsaved():
+    try:
+        a = json.loads(open('savedIDs.json','r').read())
+        return(len(a) != 0)
+    except:
+        return False
+
+def showIDLists():
+    i = 1
+    for key in json.loads(open('savedIDs.json','r').read()):
+        print("[{0}] - {1}".format(i,key))
+        i+=1
+    return i
+
+def getIDList(user,id):
+    jason = json.loads(open('savedIDs.json','r').read())
+    return idsToUsers(user,jason[list(jason.keys())[id-1]])
+
+def hasIDListName(listName):
+    try:
+        IDLists = json.loads(open('savedIDs.json').read())
+        return listName in IDLists
+    except:
+        return False
+
+#TODO make work
+def saveIDList(listName,userList):
+
+    try:
+        IDLists = json.loads(open('savedIDs.json').read())
+    except:
+        IDLists = {}
+        file = open("savedIDs.json","w+")
+        file.close()
+
+    teste = []
+    for user in userList:
+        teste.append(user.uid)
+    IDLists[listName] = teste
+
+    with open("savedIDs.json", "w") as write_file:
+        json.dump(IDLists, write_file)
+
+
+    return
+
+
 # Encode a string (password)
 def b64encode(string):
   encodedBytes = base64.b64encode(string.encode("utf-8"))
@@ -114,4 +163,14 @@ def printDest(users):
     string = ''
     for user in users:
         string += " {0} |".format(user.name)
-    return "Currently sending to: {0}".format(string)
+
+
+
+    return "Currently sending to: {0}".format(string[:-1])
+
+def idsToUsers(user,list):
+    out = []
+    for id in list:
+        dest = user.fetchThreadInfo(id)[id]
+        out.append(dest)
+    return out
