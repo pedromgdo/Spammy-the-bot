@@ -1,5 +1,4 @@
 from helpers.AuxiliarFuncs import *
-from getpass import getpass
 import time
 
 # Retrieves the information to start spamming users
