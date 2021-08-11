@@ -1,6 +1,6 @@
-from yaml import parse
 from helpers.Configuration import load_config
-import os
+from fbchat import Client
+from fbchat.models import *
 from SpammyGUI import *
 
 if __name__ == '__main__':
@@ -13,5 +13,7 @@ if __name__ == '__main__':
         print(f"Error: Username or Password incorrect!")
         exit()
     spammyGUI(user)
+    print(f"Logging out...")
+    user.logout()
 
 user.logout()
