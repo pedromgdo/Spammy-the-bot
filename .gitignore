@@ -2,3 +2,4 @@
 *.xml
 *.pyc
 credentials.yml
+.vs/slnx.sqlite
