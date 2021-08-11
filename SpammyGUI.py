@@ -22,10 +22,8 @@ def spammyGUI(user):
 
         if choice == 1:
             clearScreen()
-            
-            cdest = input("Input destination id: (-1 to cancel)")
-            if cdest != '-1':
-                dest = user.fetchThreadInfo(cdest)[cdest]
+            cdest = input("Input destination id: ")
+            dest = user.fetchThreadInfo(cdest)[cdest]
 
         elif choice == 2:
             clearScreen()

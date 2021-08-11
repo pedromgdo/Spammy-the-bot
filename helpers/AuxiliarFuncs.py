@@ -10,7 +10,7 @@ path = "LoginInformation.txt"
 def clearScreen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-# Creates a Menu that returns the chosen option (WIP)
+# Creates a Menu that returns the chosen option
 def menuScreen(options):
     print("Select an Option:")
     i = 0
@@ -18,34 +18,14 @@ def menuScreen(options):
         i = i + 1
         print("[{0}] - {1}".format(str(i), var))
     choice = int(input())
-    while choice <= 0 or choice > len(options):
-        print("Select a valid Option")
-        i = 0
-        for var in options:
-            i = i+1
-            print("[{0}] - {1}".format(str(i), var))
-        choice = int(input())
-    return choice
-
-# Creates a Menu in which the first option is to return.
-def cancellableMenu(options):
-    print("Select an Option:")
-    print("[{0}] - {1}".format(0,"Return"))
-    i = 1
-    for var in options:
-        i = i + 1
-        print("[{0}] - {1}".format(str(i), var))
-    choice = int(input())
     while choice < 0 or choice > len(options):
         print("Select a valid Option")
         i = 0
-        print("[{0}] - {1}".format(0,"Return"))
         for var in options:
             i = i+1
             print("[{0}] - {1}".format(str(i), var))
         choice = int(input())
     return choice
-
 
 # Checks if there is an account saved with a certain username
 def accountSaved(username):
