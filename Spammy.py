@@ -1,23 +1,17 @@
+from yaml import parse
+from helpers.Configuration import load_config
 import os
+from SpammyGUI import *
 
-try:
-    from SpammyGUI import *
-except:
-    print('Installing dependencies...')
-    os.system("pip install fbchat")
-    from SpammyGUI import *
-    clearScreen()
+if __name__ == '__main__':
+    DEFAULT_CREDS_FILE = "credentials.yml"
 
-
-user = None
-
-while user is None:
-    loginOption = startScreen()
-    if loginOption == 0:
-        user = loginScreen()
-    else:
-        user = Login(loginOption)
-
-spammyGUI(user)
+    parsed_creds = load_config(DEFAULT_CREDS_FILE)
+    try:
+        user = Client(parsed_creds["USERNAME"],parsed_creds["PASSWORD"])
+    except:
+        print(f"Error: Username or Password incorrect!")
+        exit()
+    spammyGUI(user)
 
 user.logout()
