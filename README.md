@@ -7,8 +7,16 @@ Other than that have fun!
 ## How to Install
 
 - Download Python at least version 3.0
+- Install requirements with: ```$ pip install -r requirements.txt```
+
+## Usage 
+
+- Create a copy of the ```credentials_example.yml``` file and rename it to ```credentials.yml```
+- Fill in login information
 - Start the bot using: ```$ python .\Spammy.py```
 - Follow instructions on screen to start spamming
+
+
 
 ## Credits
 **Helped with the project:**
@@ -17,7 +25,8 @@ Other than that have fun!
 
 ## Known Issues
 
-*Nothing at the moment, let's hope it stays that way*
+- Facebook blocking login
+  - Nothing can be done because the package used as API to access Facebook was declared unmaintained.
 
 ## Disclaimer
 **The software is provided "As is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.**
