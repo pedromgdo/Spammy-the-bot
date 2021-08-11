@@ -1,5 +1,4 @@
 *.idea
 *.xml
 *.pyc
-*.txt
 credentials.yml
